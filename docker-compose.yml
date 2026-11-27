@@ -1,0 +1,61 @@
+# docker compose up --build gateway        gateway only, tiers from .env
+# make docker-smoke                         gateway plus the mock upstream, then the smoke test
+# docker compose --profile cache up --build the gateway and the sidecar. Set AIGW_CACHE_ADDR=semcache:7700.
+#
+# Values come from your shell or from .env (compose reads it for ${...}).
+# NGINX resolves upstream names with Docker's DNS and does not read
+# /etc/hosts. Docker Desktop resolves host.docker.internal through that DNS.
+
+services:
+  gateway:
+    build: .
+    ports:
+      - "8000:8000"
+      - "8001:8001"
+    environment:
+      AIGW_API_KEYS: ${AIGW_API_KEYS:-}
+      AIGW_ROUTER_THRESHOLD: ${AIGW_ROUTER_THRESHOLD:-0.5}
+      AIGW_CHEAP_BASE_URL: ${AIGW_CHEAP_BASE_URL:-http://host.docker.internal:11434/v1}
+      AIGW_CHEAP_MODEL: ${AIGW_CHEAP_MODEL:-qwen2.5:0.5b}
+      AIGW_CHEAP_API_KEY: ${AIGW_CHEAP_API_KEY:-}
+      AIGW_STRONG_BASE_URL: ${AIGW_STRONG_BASE_URL:-http://host.docker.internal:11434/v1}
+      AIGW_STRONG_MODEL: ${AIGW_STRONG_MODEL:-gpt-oss:20b}
+      AIGW_STRONG_API_KEY: ${AIGW_STRONG_API_KEY:-}
+      AIGW_CHEAP_FORMAT: ${AIGW_CHEAP_FORMAT:-openai}
+      AIGW_STRONG_FORMAT: ${AIGW_STRONG_FORMAT:-openai}
+      AIGW_CACHE_ADDR: ${AIGW_CACHE_ADDR:-}
+      AIGW_ROUTER: ${AIGW_ROUTER:-heuristic}
+      AIGW_ROUTER_SHADOW: ${AIGW_ROUTER_SHADOW:-off}
+      AIGW_ROUTER_MODEL_SHARE: ${AIGW_ROUTER_MODEL_SHARE:-1}
+      AIGW_GUARD: ${AIGW_GUARD:-off}
+      AIGW_GUARD_ACTION: ${AIGW_GUARD_ACTION:-block}
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://127.0.0.1:8001/healthz"]
+      interval: 2s
+      timeout: 2s
+      retries: 15
+
+  mock:
+    profiles: ["test"]
+    build: .
+    entrypoint: ["openresty", "-p", "/opt/mock/", "-c", "conf/nginx.conf", "-g", "daemon off;"]
+    command: []
+    healthcheck:
+      test: ["CMD", "curl", "-sS", "-o", "/dev/null", "http://127.0.0.1:19000/"]
+      interval: 2s
+      timeout: 2s
+      retries: 15
+
+  # The semantic cache sidecar. It reads the models from ./models (read
+  # only). SEMCACHE_MODEL picks the embedding model, and SEMCACHE_ARGS adds
+  # flags, for example "--router /models/router-head --guard /models/guard-classifier".
+  semcache:
+    profiles: ["cache"]
+    build:
+      context: .
+      dockerfile: semcache/Dockerfile
+    entrypoint: ["/bin/sh", "-c"]
+    command:
+      - exec aigw-semcache --listen 0.0.0.0:7700 --model ${SEMCACHE_MODEL:-/models/minilm-l6-qqp-burn} ${SEMCACHE_ARGS:-}
+    volumes:
+      - ./models:/models:ro

@@ -1,0 +1,46 @@
+[package]
+name = "aigw-train-burn"
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.98"
+publish = false
+license = "MIT OR Apache-2.0"
+description = "Fine-tunes the semantic cache embedding model with Burn: autodiff, AdamW, Metal."
+
+# A separate crate, so that the GPU features do not reach the sidecar: Burn
+# picks the first enabled backend as the default device, and the sidecar
+# must stay on the Flex CPU backend.
+
+[lib]
+name = "train_burn"
+path = "src/lib.rs"
+
+[[bin]]
+name = "finetune-cache"
+path = "src/main.rs"
+
+[[bin]]
+name = "finetune-rerank"
+path = "src/bin/finetune-rerank.rs"
+
+[[bin]]
+name = "finetune-router"
+path = "src/bin/finetune-router.rs"
+
+[[bin]]
+name = "finetune-guard"
+path = "src/bin/finetune-guard.rs"
+
+[dependencies]
+semcache = { package = "aigw-semcache", path = "../semcache" }
+burn = { version = "0.22.0", default-features = false, features = ["std", "optim", "metal", "flex", "fusion"] }
+burn-store = { version = "0.22.0", default-features = false, features = ["std", "safetensors"] }
+minilm-burn = { git = "https://github.com/tracel-ai/models", rev = "e5d10bfbd182df9803c6637221d120f9d786364d" }
+tokenizers = { version = "0.23", default-features = false, features = ["onig"] }
+hf-hub = { version = "1.0", features = ["blocking"] }
+clap = { version = "4", features = ["derive"] }
+serde_json = "1"
+regex = "1"
+
+[profile.release]
+debug = "line-tables-only"

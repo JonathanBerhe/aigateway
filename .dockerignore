@@ -1,0 +1,13 @@
+# Build output, environments, models and data stay out of the build context.
+# The sidecar service mounts models/ at run time.
+**/target
+train/.venv
+models
+data
+.git
+.env
+gateway/logs
+gateway/*_temp
+gateway/conf/generated.conf
+tests/mock/logs
+tests/mock/*_temp

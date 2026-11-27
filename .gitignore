@@ -1,0 +1,13 @@
+/core/target/
+/gateway/logs/
+/gateway/*_temp/
+/gateway/conf/generated.conf
+/tests/mock/logs/
+/tests/mock/*_temp/
+.env
+.DS_Store
+/data/
+/semcache/target/
+/models/
+/train/.venv/
+/train-burn/target/

@@ -1,0 +1,41 @@
+question1	question2	is_duplicate
+How do I convert dollars to euros?	How do I convert euros to dollars?	0
+How do I convert Celsius to Fahrenheit?	How do I convert Fahrenheit to Celsius?	0
+How do I translate English to Italian?	How do I translate Italian to English?	0
+How do I cast a string to an int in Rust?	How do I cast an int to a string in Rust?	0
+How do I merge a branch into main in git?	How do I merge main into a branch in git?	0
+Should I learn Python before JavaScript?	Should I learn JavaScript before Python?	0
+What is the fastest way to get from Milan to Rome?	What is the fastest way to get from Rome to Milan?	0
+Can a landlord evict a tenant without notice?	Can a tenant evict a landlord without notice?	0
+Why is ham bad for dogs?	Why is ham good for dogs?	0
+How do I increase the font size in VS Code?	How do I decrease the font size in VS Code?	0
+How do I enable dark mode on iPhone?	How do I disable dark mode on iPhone?	0
+How do I lose weight fast?	How do I gain weight fast?	0
+What are the benefits of drinking coffee?	What are the risks of drinking coffee?	0
+Who was the first president of the United States?	Who was the last president of the United States?	0
+What is the capital of Austria?	What is the capital of Australia?	0
+How many calories are in a boiled egg?	How many calories are in a fried egg?	0
+How long does it take to boil an egg?	How long does it take to boil a potato?	0
+What time zone is New York in?	What time zone is Los Angeles in?	0
+How do I uninstall Docker on a Mac?	How do I uninstall Docker on Windows?	0
+Who wrote Pride and Prejudice?	Who wrote Sense and Sensibility?	0
+What is the capital of France?	whats the capital city of france	1
+How do I convert dollars to euros?	What is the way to change USD into EUR?	1
+How do I convert Celsius to Fahrenheit?	What is the formula to change Celsius into Fahrenheit?	1
+How do I cast a string to an int in Rust?	How can I parse a String into an i32 in Rust?	1
+How do I merge a branch into main in git?	How can I merge my feature branch into the main branch with git?	1
+Should I learn Python before JavaScript?	Is it better to learn Python first and then JavaScript?	1
+How do I increase the font size in VS Code?	How can I make the text bigger in VS Code?	1
+How do I enable dark mode on iPhone?	How can I turn on dark mode on my iPhone?	1
+How do I lose weight fast?	What is the quickest way to lose weight?	1
+What are the benefits of drinking coffee?	What are the health benefits of coffee?	1
+How many calories are in a boiled egg?	How many calories does a hard-boiled egg have?	1
+How long does it take to boil an egg?	How many minutes does it take to boil an egg?	1
+What time zone is New York in?	Which time zone does New York use?	1
+How do I uninstall Docker on a Mac?	How can I remove Docker from macOS?	1
+Who wrote Pride and Prejudice?	Who is the author of Pride and Prejudice?	1
+How do I reverse a list in Python?	What is the best way to reverse a Python list?	1
+What is the fastest way to learn Spanish?	How can I learn Spanish quickly?	1
+Why is the sky blue?	What makes the sky look blue?	1
+How do I center a div in CSS?	What is the best way to center a div with CSS?	1
+What is the boiling point of water?	At what temperature does water boil?	1

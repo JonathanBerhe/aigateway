@@ -1,0 +1,24 @@
+[package]
+name = "aigw-core"
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.85"
+publish = false
+license = "MIT OR Apache-2.0"
+description = "Native core of the aigateway data plane. OpenResty loads it through LuaJIT FFI."
+
+[lib]
+name = "aigw_core"
+# cdylib: the shared library that LuaJIT loads with ffi.load().
+# rlib: lets the unit tests and future benchmarks link the crate directly.
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+# The regex deny list of the guardrail (src/guard.rs). It matches in linear time.
+regex = "1"
+
+[profile.release]
+lto = "thin"
+codegen-units = 1
+# Keep symbols for line numbers so that flame graphs of the gateway stay readable.
+debug = "line-tables-only"

@@ -1,0 +1,16 @@
+[project]
+name = "aigw-train"
+version = "0.1.0"
+description = "Training and fine-tuning of the small models behind aigateway"
+requires-python = ">=3.12,<3.14"
+dependencies = [
+    "torch>=2.6",
+    "sentence-transformers>=4.0",
+    "datasets>=3.0",
+    "accelerate>=1.0",
+    "onnxruntime>=1.32.0",
+    "onnx>=1.23.2",
+]
+
+[tool.uv]
+package = false
